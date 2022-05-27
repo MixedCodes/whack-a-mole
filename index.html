@@ -10,13 +10,21 @@
 <body>
 	<header>
   		<h1>เกมสะสม Speedkub</h1>
+
+  		<div class="h2">
+		<h2>คะแนน: <span id="score-board">0</span></h2>
+		<h2>คะแนนสูงสุด: <span id="highscore">0</span></h2>
+		</div>
+		<br>
+		<div class="h2">
 		<h2>เวลาที่เหลือ: <span id="timer">0</span></h2>
-		<h2>คะแนน: <span id="score">0</span></h2>
+		<h2>จำนวนชีวิต: <span id="lives">5</span></h2>
+		</div>
+		
   	</header>
   	<main>
-  
-	  	<secion id="board">
-	    	<div class="hole hole1">
+  		<section id="board">
+  			<div class="hole hole1">
 	      		<div class="mole"></div>
 	    	</div>
 		    <div class="hole hole2">
@@ -42,10 +50,10 @@
 		    </div>
 		    <div class="hole hole9">
 		      <div class="mole"></div>
-		    </div>
-		 </section>
-		 <button onClick="start()" id="start">Start!</button>
-	</main>
+		    </div>	
+  		</section>
+  		<button onClick="start()" id="start">เริ่มเล่น</button>
+  	</main>
 	<script src="script.js"></script>
 </body>
 </html>
