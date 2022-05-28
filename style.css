@@ -84,27 +84,31 @@ h2 {
   top: 100%;
   width: 60%;
   height: 60%;
-  transition: all 0.3s;
+  transition: all 0.3s/*, background 0s*/;
   left: 50%;
   transform: translateX(-50%);
 }
 
 .hole.bomb .mole {
-  background: url("assets/rock.jpg") bottom center no-repeat;
-}
-
-.hole.coin .mole {
-  background: url("assets/coin.png")
-}
-
-.mole {
-  background: url("assets/icon.png") bottom center no-repeat;
+  background: url("assets/bomb.png") bottom center no-repeat;
   background-size: 100%;
   position: absolute;
   top: 100%;
   width: 60%;
   height: 60%;
-  transition: all 0.3s;
+  transition: all 0.3s, background 0s;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.hole.coin .mole {
+  background: url("assets/coin.png") bottom center no-repeat;
+  background-size: 100%;
+  position: absolute;
+  top: 100%;
+  width: 60%;
+  height: 60%;
+  transition: all 0.3s, background 0s;
   left: 50%;
   transform: translateX(-50%);
 }

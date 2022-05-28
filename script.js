@@ -1,20 +1,22 @@
-let seconds = 10;
+let seconds = 100;
 const defaultMin = 500;
 const defaultMax = 1000;
 const defaultSpeed = 10;
-const defaultLives = 5;
+
+const defaultLives = 50
 let gameOverEnabled = true;
 let testMode = false;
+let refresh = false;
 const difficulty = 0;
 
 let hole1 = ".hole"
 const holes = document.querySelectorAll(".hole");
 const moles = document.querySelectorAll(".mole");
 let lastHole;
+const lives = document.getElementById("lives");
 const scoreSpan  = document.getElementById("score-board");
 const highscoreSpan = document.getElementById("highscore");
 const timerSpan = document.getElementById("timer");
-const lives = document.getElementById("lives");
 const startButton = document.getElementById("start");
 const defaultStartButtonText = startButton.textContent;
 
@@ -29,9 +31,7 @@ let highscore = highscoreSpan.textContent;
 // let missed = 0
 
 let gameTimeOut
-
 let moleTimeOut;
-
 let timer;
 
 
@@ -56,25 +56,29 @@ function pop() {
 	if (defaultMin - speed * 10 <= 10) {
 	speed = defaultMin - 10
 	}
-	let min = defaultMin - ((speed * 10) * 1 + (difficulty / 10));
-	let max = defaultMax - ((speed * 10) * 1 + (difficulty / 10));
+	let min = defaultMin - ((speed * 10) * (1 + (difficulty / 10)));
+	let max = defaultMax - ((speed * 10) * (1 + (difficulty / 10)));
 
    	const time = getRandomInt(min, max);
     const hole = getRandomHole(holes);
 	const type = getRandomInt(1, 100);
 	if (type <= 20) {
 		hole.classList.add("bomb");
+		console.log("bomb");
 	} else if (type <= 40 && type > 21) {
 		hole.classList.add("coin");
+		console.log("coin");
 	}
 
     hole.classList.add("up");
     moleTimeOut = window.setTimeout(function() {
      	if (hole.classList.contains("up")) {
     		hole.classList.remove("up");
+			if (!hole.classList.contains("bomb")) {
+				livesLeft --;	
+			}
 			hole.classList.remove("bomb");
 			hole.classList.remove("coin");
-    		livesLeft --;
     		lives.textContent = livesLeft;
     		gameOver();
     	}
@@ -85,8 +89,14 @@ function pop() {
 function start() {
 	if (started) return;
 	// checkTestMode();
+	clearTimeout(gameTimeOut);
+	clearTimeout(moleTimeOut);
+	clearTimeout(timer);
 	startButton.textContent = "เริ่มใหม่";
 	startButton.onclick = confirm;
+	scoreSpan.style.color = "E6564E";
+	scoreSpan.style.backgroundColor = "#FFFFFF";
+	scoreSpan.style.fontWeight = "700";
 	started = true;
 	scoreSpan.textContent = 0;
 	timerSpan.textContent = timeLeft;
@@ -116,10 +126,17 @@ function gameOver() {
 		timerSpan.textContent = 0;
 		checkHighscore();
 		// timerSpan.textContent = 0
+		retry();
 		lastHole.classList.remove("up");
 		lastHole.classList.remove("bomb");
 		lastHole.classList.remove("coin");
-		retry();
+	}
+}
+
+function checkMaxScore() {
+	if (score >= 15) {
+		scoreSpan.style.color = "#B69B54";
+		scoreSpan.style.fontWeight = "900";
 	}
 }
 
@@ -128,11 +145,22 @@ function whack(click) {
 	if (this.parentNode.classList.contains("up")) {
 		if (this.parentNode.classList.contains("bomb")) {
 			if (score <= 0) return;
+			livesLeft--;
+			if (score >= 15) return;
 			score--;
 		} else if (this.parentNode.classList.contains("coin")) {
-			score += 2;
+			if (score >= 15) return;
+			if (score = 14) {
+				score++;
+			} 
+			else {
+				score+= 2;
+			}
+			checkMaxScore();
 		} else {
-			score ++;
+			if (score >= 15) return;
+			score++;
+			checkMaxScore();
 		}
 		this.parentNode.classList.remove("up");
 		this.parentNode.classList.remove("bomb");
@@ -186,6 +214,12 @@ function countdown() {
 // 	if (testMode = true) {
 // 		gameOverEnabled = false;
 // 		seconds = seconds * 10;
+// 	}
+// }
+
+// function checkRefresh() {
+// 	if (refresh = true) {
+// 		location.reload();
 // 	}
 // }
 
