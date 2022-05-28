@@ -89,6 +89,26 @@ h2 {
   transform: translateX(-50%);
 }
 
+.hole.bomb .mole {
+  background: url("assets/rock.jpg") bottom center no-repeat;
+}
+
+.hole.coin .mole {
+  background: url("assets/coin.png")
+}
+
+.mole {
+  background: url("assets/icon.png") bottom center no-repeat;
+  background-size: 100%;
+  position: absolute;
+  top: 100%;
+  width: 60%;
+  height: 60%;
+  transition: all 0.3s;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .hole.up .mole {
   top: 2.5rem;
 }

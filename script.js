@@ -1,11 +1,13 @@
 let seconds = 10;
-let defaultMin = 500;
-let defaultMax = 1000;
-let defaultSpeed = 10;
-let defaultlivesLeft = 5;
-const gameOverEnabled = true;
-let difficulty = 0;
+const defaultMin = 500;
+const defaultMax = 1000;
+const defaultSpeed = 10;
+const defaultLives = 5;
+let gameOverEnabled = true;
+let testMode = false;
+const difficulty = 0;
 
+let hole1 = ".hole"
 const holes = document.querySelectorAll(".hole");
 const moles = document.querySelectorAll(".mole");
 let lastHole;
@@ -16,6 +18,8 @@ const lives = document.getElementById("lives");
 const startButton = document.getElementById("start");
 const defaultStartButtonText = startButton.textContent;
 
+
+
 let timeUp = false;
 let started = false;
 let score = 0;
@@ -23,10 +27,8 @@ let livesLeft = 0;
 let timeLeft = seconds;
 let highscore = highscoreSpan.textContent;
 // let missed = 0
-const gameTimeOut = setTimeout(function() {
-    started = false;
-    retry();
-	}, seconds * 1000);
+
+let gameTimeOut
 
 let moleTimeOut;
 
@@ -56,12 +58,22 @@ function pop() {
 	}
 	let min = defaultMin - ((speed * 10) * 1 + (difficulty / 10));
 	let max = defaultMax - ((speed * 10) * 1 + (difficulty / 10));
+
    	const time = getRandomInt(min, max);
     const hole = getRandomHole(holes);
+	const type = getRandomInt(1, 100);
+	if (type <= 20) {
+		hole.classList.add("bomb");
+	} else if (type <= 40 && type > 21) {
+		hole.classList.add("coin");
+	}
+
     hole.classList.add("up");
     moleTimeOut = window.setTimeout(function() {
      	if (hole.classList.contains("up")) {
     		hole.classList.remove("up");
+			hole.classList.remove("bomb");
+			hole.classList.remove("coin");
     		livesLeft --;
     		lives.textContent = livesLeft;
     		gameOver();
@@ -72,6 +84,7 @@ function pop() {
  
 function start() {
 	if (started) return;
+	// checkTestMode();
 	startButton.textContent = "เริ่มใหม่";
 	startButton.onclick = confirm;
 	started = true;
@@ -79,11 +92,14 @@ function start() {
 	timerSpan.textContent = timeLeft;
 	score = 0;
 	missed = 0;
-	livesLeft = defaultlivesLeft;
-	lives.textContent = defaultlivesLeft;
+	livesLeft = defaultLives;
+	lives.textContent = defaultLives;
 	pop();
 	countdown();
-	gameTimeOut;
+	gameTimeOut = window.setTimeout(function() {
+		started = false;
+		retry();
+	}, seconds * 1000)
 
 	// setTimeout(() => {
 	// 	started = false;
@@ -101,6 +117,8 @@ function gameOver() {
 		checkHighscore();
 		// timerSpan.textContent = 0
 		lastHole.classList.remove("up");
+		lastHole.classList.remove("bomb");
+		lastHole.classList.remove("coin");
 		retry();
 	}
 }
@@ -108,8 +126,17 @@ function gameOver() {
 function whack(click) {
 	if (!click.isTrusted) return;
 	if (this.parentNode.classList.contains("up")) {
-		score ++;
+		if (this.parentNode.classList.contains("bomb")) {
+			if (score <= 0) return;
+			score--;
+		} else if (this.parentNode.classList.contains("coin")) {
+			score += 2;
+		} else {
+			score ++;
+		}
 		this.parentNode.classList.remove("up");
+		this.parentNode.classList.remove("bomb");
+		this.parentNode.classList.remove("coin");
 	}
 	scoreSpan.textContent = score;
 }
@@ -154,5 +181,12 @@ function countdown() {
 		countdown();
 	}, 1000);
 }
+
+// function checkTestMode() {
+// 	if (testMode = true) {
+// 		gameOverEnabled = false;
+// 		seconds = seconds * 10;
+// 	}
+// }
 
 moles.forEach(mole => mole.addEventListener('click', whack));
