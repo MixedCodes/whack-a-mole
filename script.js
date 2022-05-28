@@ -1,9 +1,10 @@
-let seconds = 100;
+let seconds = 20;
 const defaultMin = 500;
 const defaultMax = 1000;
 const defaultSpeed = 10;
+const point = 10;
 
-const defaultLives = 50
+const defaultLives = 3
 let gameOverEnabled = true;
 let testMode = false;
 let refresh = false;
@@ -15,19 +16,21 @@ const moles = document.querySelectorAll(".mole");
 let lastHole;
 const lives = document.getElementById("lives");
 const scoreSpan  = document.getElementById("score-board");
-const highscoreSpan = document.getElementById("highscore");
+// const highscoreSpan = document.getElementById("highscore");
 const timerSpan = document.getElementById("timer");
 const startButton = document.getElementById("start");
 const defaultStartButtonText = startButton.textContent;
-
-
+const container = document.querySelector(".container");
+const tel = document.getElementById("tel");
+const earnPointUrl = "https://speedkub-backend-n2sgktcxxa-as.a.run.app/earn?phone="
 
 let timeUp = false;
 let started = false;
 let score = 0;
 let livesLeft = 0;
 let timeLeft = seconds;
-let highscore = highscoreSpan.textContent;
+let won = false;
+// let highscore = highscoreSpan.textContent;
 // let missed = 0
 
 let gameTimeOut
@@ -64,10 +67,8 @@ function pop() {
 	const type = getRandomInt(1, 100);
 	if (type <= 20) {
 		hole.classList.add("bomb");
-		console.log("bomb");
 	} else if (type <= 40 && type > 21) {
 		hole.classList.add("coin");
-		console.log("coin");
 	}
 
     hole.classList.add("up");
@@ -75,7 +76,8 @@ function pop() {
      	if (hole.classList.contains("up")) {
     		hole.classList.remove("up");
 			if (!hole.classList.contains("bomb")) {
-				livesLeft --;	
+				livesLeft--;
+				console.log("missed");
 			}
 			hole.classList.remove("bomb");
 			hole.classList.remove("coin");
@@ -94,13 +96,13 @@ function start() {
 	clearTimeout(timer);
 	startButton.textContent = "เริ่มใหม่";
 	startButton.onclick = confirm;
-	scoreSpan.style.color = "E6564E";
+	scoreSpan.style.color = "#E6564E";
 	scoreSpan.style.backgroundColor = "#FFFFFF";
 	scoreSpan.style.fontWeight = "700";
 	started = true;
 	scoreSpan.textContent = 0;
 	timerSpan.textContent = timeLeft;
-	score = 0;
+	score = 14;
 	missed = 0;
 	livesLeft = defaultLives;
 	lives.textContent = defaultLives;
@@ -124,7 +126,8 @@ function gameOver() {
 		clearTimeout(moleTimeOut);
 		clearTimeout(timer);
 		timerSpan.textContent = 0;
-		checkHighscore();
+		checkMaxScore();
+		checkScore();
 		// timerSpan.textContent = 0
 		retry();
 		lastHole.classList.remove("up");
@@ -137,6 +140,7 @@ function checkMaxScore() {
 	if (score >= 15) {
 		scoreSpan.style.color = "#B69B54";
 		scoreSpan.style.fontWeight = "900";
+		won = true;
 	}
 }
 
@@ -144,13 +148,16 @@ function whack(click) {
 	if (!click.isTrusted) return;
 	if (this.parentNode.classList.contains("up")) {
 		if (this.parentNode.classList.contains("bomb")) {
-			if (score <= 0) return;
 			livesLeft--;
+			console.log("whacked a bomc");
+			lives.textContent = livesLeft;
+			gameOver();
+			if (score <= 0) return;
 			if (score >= 15) return;
 			score--;
 		} else if (this.parentNode.classList.contains("coin")) {
 			if (score >= 15) return;
-			if (score = 14) {
+			if (score === 14) {
 				score++;
 			} 
 			else {
@@ -191,18 +198,22 @@ function confirmed() {
 	startButton.textContent = "เริ่มใหม่";
 }
 
-function checkHighscore() {
-	if (score > highscore && !started) {
-		highscore = score;
-		highscoreSpan.textContent = score;
-		localStorage.setItem("highscore", score);
+function checkScore() {
+	// if (score > highscore && !started) {
+	// 	highscore = score;
+	// 	highscoreSpan.textContent = score;
+	// 	localStorage.setItem("highscore", score);
+	// }
+	if (score === 15 || won === true) {
+		container.classList.add("open");
+		console.log("won");
 	}
 }
 
 function countdown() {	
 	timer = window.setTimeout(function() {
 		if (timerSpan.textContent <= 0) {
-			checkHighscore();
+			checkScore();
 			return;
 		}
 		timerSpan.textContent--;
@@ -210,15 +221,26 @@ function countdown() {
 	}, 1000);
 }
 
+function close() {
+	console.log("closing");
+	container.classList.remove("open");
+}
+
+function earnPoint() {
+	if (!container.classList.contains("open")) return;
+	// const response = await fetch(`${earnPointUrl}${tel.value}&point=${point}`);
+	fetch(`${earnPointUrl}${tel.value}&point=${point}`).then(res => console.log(res)).catch(err => console.log(err))
+	container.classList.remove("open");
+}
 // function checkTestMode() {
-// 	if (testMode = true) {
+// 	if (testMode === true) {
 // 		gameOverEnabled = false;
 // 		seconds = seconds * 10;
 // 	}
 // }
 
 // function checkRefresh() {
-// 	if (refresh = true) {
+// 	if (refresh === true) {
 // 		location.reload();
 // 	}
 // }

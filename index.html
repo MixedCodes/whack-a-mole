@@ -10,15 +10,16 @@
 <body>
 	<header>
   		<h1>เกมสะสม Speedkub</h1>
-
+		<h2>เวลาที่เหลือ: <span id="timer">0</span></h2>
   		<div class="h2">
-		<h2>คะแนน: <span id="score-board">0</span></h2>
-		<h2>คะแนนสูงสุด: <span id="highscore">0</span></h2>
+		
+	<!-- 	<h2>คะแนนสูงสุด: <span id="highscore">0</span></h2> -->
 		</div>
 		<br>
 		<div class="h2">
-		<h2>เวลาที่เหลือ: <span id="timer">0</span></h2>
-		<h2>จำนวนชีวิต: <span id="lives">50</span></h2>
+
+		<h2>คะแนน: <span id="score-board">0</span></h2>
+		<h2>จำนวนชีวิต: <span id="lives">3</span></h2>
 		</div>
 		
   	</header>
@@ -54,6 +55,17 @@
   		</section>
   		<button onClick="start()" id="start">เริ่มเล่น</button>
   	</main>
+  	<div class="container">
+	  	<div class="popup" id="telephone">
+	  		<button id="close" onclick="close()">&times;</button>
+	  		<br>
+			<label for="tel" id="tel-label">คุณเล่นเกมได้ 15 คะแนน รับเลย 15 เหรียญ เพียงกรอบเบอร์โทรศัทพ์ด้านล่าง</label>
+			<br>
+			<input id="tel" type="tel" placeholder="0XXXXXXXXX">
+			<button id="submit" type="button" onclick="earnPoint()">ยืนยัน</button>
+			<p>(จำกัด 15 เหรียญต่อวัน)</p>
+		</div>
+	</div>
 	<script src="script.js"></script>
 </body>
 </html>
