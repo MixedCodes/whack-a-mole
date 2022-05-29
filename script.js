@@ -102,7 +102,7 @@ function start() {
 	started = true;
 	scoreSpan.textContent = 0;
 	timerSpan.textContent = timeLeft;
-	score = 14;
+	score = 0;
 	missed = 0;
 	livesLeft = defaultLives;
 	lives.textContent = defaultLives;
