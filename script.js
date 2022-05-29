@@ -22,7 +22,7 @@ const startButton = document.getElementById("start");
 const defaultStartButtonText = startButton.textContent;
 const container = document.querySelector(".container");
 const tel = document.getElementById("tel");
-const earnPointUrl = "https://speedkub-backend-n2sgktcxxa-as.a.run.app/earn?phone="
+const earnPointUrl = "https://script.google.com/macros/s/AKfycbw9CjYyKuRx72cozBVcu0oDFcMNxHlb5nHjec_z8dzvpB9gcHNkFKBAcOIj2dgVgIDl/exec?phone="
 
 let timeUp = false;
 let started = false;
