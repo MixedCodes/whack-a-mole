@@ -4,7 +4,7 @@ const defaultMax = 1000;
 const defaultSpeed = 10;
 const point = 10;
 
-const defaultLives = 5;
+const defaultLives = 3
 let gameOverEnabled = true;
 let testMode = false;
 let refresh = false;
@@ -102,7 +102,7 @@ function start() {
 	started = true;
 	scoreSpan.textContent = 0;
 	timerSpan.textContent = timeLeft;
-	score = 0;
+	score = 14;
 	missed = 0;
 	livesLeft = defaultLives;
 	lives.textContent = defaultLives;
