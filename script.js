@@ -4,7 +4,7 @@ const defaultMax = 1000;
 const defaultSpeed = 10;
 const point = 10;
 
-const defaultLives = 20;
+const defaultLives = 5;
 let gameOverEnabled = true;
 let testMode = false;
 let refresh = false;
