@@ -1,10 +1,10 @@
 let seconds = 20;
-const defaultMin = 500;
-const defaultMax = 1000;
+const defaultMin = 1000;
+const defaultMax = 1500;
 const defaultSpeed = 10;
 const point = 10;
 
-const defaultLives = 3
+const defaultLives = 5;
 let gameOverEnabled = true;
 let testMode = false;
 let refresh = false;
