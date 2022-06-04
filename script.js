@@ -79,6 +79,10 @@ function pop() {
 			if (!hole.classList.contains("bomb")) {
 				livesLeft--;
 				console.log("missed");
+			} else {
+				score++;
+				scoreSpan.textContent = score;
+				checkMaxScore();
 			}
 			hole.classList.remove("bomb");
 			hole.classList.remove("coin");
