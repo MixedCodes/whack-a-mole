@@ -31,11 +31,11 @@
   }
   */
   h1 {
-    font-size: 2.5rem;
+    /*font-size: 2.5rem;*/
   }
   
   h2 {
-    font-size: 1.75rem;
+    /*font-size: 1.75rem;*/
     font-weight: 300;
     margin: 0;
   }
@@ -85,6 +85,7 @@
     flex: 1 0 33.33%;
     overflow: hidden;
     position: relative;
+    
   }
 
 
@@ -98,7 +99,7 @@
     height: 100%;
     position: absolute;
     z-index: 2;
-    bottom: -30px;
+    bottom: -20px;
     pointer-events: none
   }
   
@@ -148,7 +149,7 @@
     font-weight: 700;
     margin: 2rem auto 0 auto;
     border-radius: 75px;
-    font-size: 2em;
+    font-size: 1.5em;
   
   }
   
