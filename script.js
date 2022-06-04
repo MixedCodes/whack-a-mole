@@ -3,6 +3,7 @@ const defaultMin = 1000;
 const defaultMax = 1500;
 const defaultSpeed = 10;
 const point = 10;
+const defaultScore = 0;
 
 const defaultLives = 5;
 let gameOverEnabled = true;
@@ -100,9 +101,9 @@ function start() {
 	scoreSpan.style.backgroundColor = "#FFFFFF";
 	scoreSpan.style.fontWeight = "700";
 	started = true;
-	scoreSpan.textContent = 0;
+	scoreSpan.textContent = defaultScore;
 	timerSpan.textContent = timeLeft;
-	score = 0;
+	score = defaultScore;
 	missed = 0;
 	livesLeft = defaultLives;
 	lives.textContent = defaultLives;
@@ -221,7 +222,7 @@ function countdown() {
 	}, 1000);
 }
 
-function close() {
+function closePopUp() {
 	console.log("closing");
 	container.classList.remove("open");
 }
