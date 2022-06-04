@@ -158,19 +158,19 @@ function whack(click) {
 			lives.textContent = livesLeft;
 			gameOver();
 			if (score <= 0) return;
-			if (score >= 15) return;
+			// if (score >= 15) return;
 			score--;
 		} else if (this.parentNode.classList.contains("coin")) {
-			if (score >= 15) return;
-			if (score === 14) {
-				score++;
-			} 
-			else {
+			// if (score >= 15) return;
+			// if (score === 14) {
+			// 	score++;
+			// } 
+			// else {
 				score+= 2;
-			}
+			// }
 			checkMaxScore();
 		} else {
-			if (score >= 15) return;
+			// if (score >= 15) return;
 			score++;
 			checkMaxScore();
 		}
