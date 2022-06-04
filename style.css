@@ -64,20 +64,23 @@
   }
 
   #header-bottom {
-    margin-bottom: -5rem;
+   
   }
   
   #board {
-    width: 75%;
-    height: 75%;
+    width: 60vh;
+    height: 60vh;
     display: flex;
     flex-wrap: wrap;
     margin: 0 auto;
   }
 
-/*  @media (max-width: 720px) {
-
-  }*/
+  @media (max-width: 720px) {
+    #board {
+      width: 75%;
+      height: 75%;     
+    }
+  }
   
   .hole {
     margin: 0;
